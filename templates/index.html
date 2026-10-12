@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Sentix AI - Production-grade context-aware emotion detection and natural language telemetry." />
+  <title>Sentix AI — Advanced Emotion Intelligence Platform</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  
+  <link rel="stylesheet" href="/static/css/style.css" />
+</head>
+<body>
+  <!-- Optimized Ambient Atmosphere Background -->
+  <div class="glow-orb orb-primary" aria-hidden="true"></div>
+  <div class="glow-orb orb-secondary" aria-hidden="true"></div>
+  <div class="grid-overlay" aria-hidden="true"></div>
+
+  <div class="app-shell">
+    <!-- Main Header -->
+    <header class="app-header">
+      <div class="brand-group">
+        <div class="brand-badge">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
+            <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z"/>
+            <path d="M8 14s1.5 2 4 2 4-2 4-2M9 9h.01M15 9h.01"/>
+          </svg>
+        </div>
+        <div class="brand-meta">
+          <h1 class="brand-title">Sentix<strong>AI</strong></h1>
+          <span class="badge-tag">DistilRoBERTa v2.1</span>
+        </div>
+      </div>
+
+      <div class="header-right">
+        <div class="status-pill" title="Hardware accelerator loaded">
+          <span class="status-dot"></span>
+          <span>Engine Active</span>
+        </div>
+        <button id="toggle-history-btn" class="nav-btn" aria-label="Toggle analysis history drawer">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"></circle>
+            <polyline points="12 6 12 12 16 14"></polyline>
+          </svg>
+          <span>History</span>
+          <span id="history-counter" class="badge-count">0</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Workspace Grid -->
+    <main class="main-workspace">
+      <!-- Input Stream Panel -->
+      <section class="panel-card input-panel" aria-labelledby="input-heading">
+        <div class="panel-header">
+          <div class="panel-title-wrap">
+            <h2 id="input-heading" class="panel-title">Input Stream</h2>
+            <span class="panel-subtitle">Evaluate natural language syntax, negation, and irony</span>
+          </div>
+          <span id="char-count" class="mono-badge">0 / 500</span>
+        </div>
+
+        <div class="textarea-container">
+          <textarea
+            id="text-input"
+            maxlength="500"
+            rows="6"
+            placeholder="Type or paste any statement to analyze emotions, subtext, and subtle tonality..."
+            spellcheck="false"
+          ></textarea>
+        </div>
+
+        <!-- Benchmark Presets -->
+        <div class="chip-container">
+          <span class="chip-label">Test Benchmarks:</span>
+          <div class="chip-group" role="group" aria-label="Benchmark presets">
+            <button class="chip" data-sample="Oh, fantastic! Another flat tire on the way to an interview. Just what my morning needed.">Sarcasm / Irony</button>
+            <button class="chip" data-sample="I can't say I'm disappointed that they cancelled the trip.">Litotes</button>
+            <button class="chip" data-sample="I finally received my offer letter after months of waiting!">High Joy</button>
+            <button class="chip" data-sample="I hear suspicious footsteps coming from upstairs right now.">Fear Spike</button>
+          </div>
+        </div>
+
+        <div class="panel-footer">
+          <div class="hotkey-indicator">
+            <kbd>Ctrl</kbd> + <kbd>Enter</kbd> to analyze
+          </div>
+          <div class="action-buttons">
+            <button id="clear-btn" class="btn-ghost" type="button">Clear</button>
+            <button id="analyze-btn" class="btn-gradient" type="button">
+              <span class="btn-text">Execute Analysis</span>
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Output & Telemetry Panel -->
+      <section class="panel-card output-panel" aria-labelledby="output-heading">
+        <div class="panel-header">
+          <div class="panel-title-wrap">
+            <h2 id="output-heading" class="panel-title">Emotion Telemetry</h2>
+            <span class="panel-subtitle">Multi-dimensional probability spectrum</span>
+          </div>
+          <div class="output-actions">
+            <span id="latency-tag" class="latency-badge hidden">⚡ 0ms</span>
+            <button id="export-json-btn" class="btn-icon hidden" title="Export as JSON" aria-label="Export results as JSON">
+              <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/>
+              </svg>
+            </button>
+            <button id="copy-btn" class="btn-icon hidden" title="Copy Raw Result" aria-label="Copy result to clipboard">
+              <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Idle State -->
+        <div id="idle-placeholder" class="state-container idle-view">
+          <div class="state-graphic">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true">
+              <path d="M21 12a9 9 0 0 1-9 9m9-9a9 9 0 0 0-9-9m9 9H3m9 9a9 9 0 0 1-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9"/>
+            </svg>
+          </div>
+          <h3>Inference Engine Standing By</h3>
+          <p>Submit text or pick a test benchmark above to compute attention weights.</p>
+        </div>
+
+        <!-- Spinner State -->
+        <div id="loader" class="state-container loader-view hidden" aria-live="polite">
+          <div class="cyber-spinner">
+            <div class="spinner-ring"></div>
+            <div class="spinner-core"></div>
+          </div>
+          <span class="loader-caption">Running forward inference pass...</span>
+        </div>
+
+        <!-- Active Result Telemetry Box -->
+        <div id="result-box" class="result-body hidden">
+          <!-- Dominant Verdict Banner -->
+          <div class="primary-verdict-card" id="verdict-card">
+            <div class="verdict-left">
+              <span class="sub-label">Primary Emotion</span>
+              <div class="dominant-emotion-wrap">
+                <span id="emotion-emoji" class="verdict-emoji">✨</span>
+                <span id="emotion-label" class="verdict-text">Neutral</span>
+              </div>
+              <div class="polarity-tag" id="polarity-tag">Neutral Polarity</div>
+            </div>
+            <div class="verdict-right">
+              <div class="confidence-circle">
+                <span id="confidence-label" class="confidence-val">0%</span>
+                <span class="confidence-lbl">Confidence</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Dual Tab System (Linear Spectrum & Radar Chart) -->
+          <div class="visualization-tabs">
+            <div class="tab-buttons" role="tablist">
+              <button class="tab-btn active" data-tab="bars" role="tab" aria-selected="true">Linear Spectrum</button>
+              <button class="tab-btn" data-tab="radar" role="tab" aria-selected="false">Radar Distribution</button>
+            </div>
+
+            <div id="tab-bars" class="tab-content active" role="tabpanel">
+              <div id="distribution-bars" class="spectrum-list"></div>
+            </div>
+
+            <div id="tab-radar" class="tab-content" role="tabpanel">
+              <div class="radar-container">
+                <svg id="radar-chart" viewBox="0 0 300 300" class="radar-svg" aria-label="Emotion radar chart"></svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Slide-in History Drawer -->
+    <aside id="history-drawer" class="history-drawer hidden" aria-label="Session history">
+      <div class="drawer-header">
+        <div class="drawer-title">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"></circle>
+            <polyline points="12 6 12 12 16 14"></polyline>
+          </svg>
+          <span>Session History</span>
+        </div>
+        <div class="drawer-actions">
+          <button id="clear-history-btn" class="btn-ghost-sm" type="button">Clear All</button>
+          <button id="close-history-btn" class="btn-icon" type="button" aria-label="Close history">✕</button>
+        </div>
+      </div>
+      <div id="history-list" class="history-items-container"></div>
+    </aside>
+  </div>
+
+  <script src="/static/js/app.js" defer></script>
+</body>
+</html>
